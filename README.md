@@ -1,1 +1,3 @@
-Developed 'Mytorch' from scratch, a comprehensive Deep Learning library which is parallel in function to Pytorch.
+# Mytorch: A Comprehensive Deep Learning Library
+
+Mytorch is a deep learning library developed from scratch, providing a comprehensive set of functionalities parallel to PyTorch. This library is designed to empower developers with a flexible and accessible toolset for building and experimenting with deep learning models.
