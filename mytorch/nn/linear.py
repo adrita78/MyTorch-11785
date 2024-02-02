@@ -1,30 +1,27 @@
 import numpy as np
 
+# TODO: Implement this code similar to how you did for HW1P1 or HW2P1.
 
 class Linear:
 
     def __init__(self, in_features, out_features, debug=False):
-        """
-        Initialize the weights and biases with zeros
-        Checkout np.zeros function.
-        Read the writeup to identify the right shapes for all.
-        """
-        self.W = np.zeros((out_features, in_features), dtype= float)
-        self.b = np.zeros((out_features,1), dtype = float)
+
+        self.W = np.zeros((out_features, in_features), dtype="f")
+        self.b = np.zeros((out_features, 1), dtype="f")
+        self.dLdW = np.zeros((out_features, in_features), dtype="f")
+        self.dLdb = np.zeros((out_features, 1), dtype="f")
 
         self.debug = debug
 
+    def __call__(self, A):
+        return self.forward(A)    
+
     def forward(self, A):
-        """
-        :param A: Input to the linear layer with shape (N, C0)
-        :return: Output Z of linear layer with shape (N, C1)
-        Read the writeup for implementation details
-        """
+
         self.A = A
-        self.N = self.A.shape[0]
-        # Think how will self.Ones helps in the calculations and uncomment below
-        self.Ones = np.ones((self.N,1))
-        Z = np.dot(self.A,self.W.T) + np.dot(self.Ones,self.b.T)
+        self.N = A.shape[0]
+        self.Ones = np.ones((self.N, 1), dtype="f")
+        Z = np.dot(self.A, self.W.T) + np.dot(self.Ones, self.b.T)
 
         return Z
 
@@ -32,11 +29,12 @@ class Linear:
 
         dZdA = self.W.T
         dZdW = self.A
+        
         dZdb = self.Ones
-
-        dLdA = np.dot(dLdZ , dZdA.T)
-        dLdW = np.dot(dLdZ.T , dZdW)
-        dLdb = np.dot(dLdZ.T , dZdb)
+        dLdA = np.dot(dLdZ, dZdA.T)
+        dLdW = np.dot(dLdZ.T, dZdW)
+    
+        dLdb = np.dot(dLdZ.T, dZdb)
         self.dLdW = dLdW / self.N
         self.dLdb = dLdb / self.N
 
@@ -44,7 +42,10 @@ class Linear:
 
             self.dZdA = dZdA
             self.dZdW = dZdW
+            
             self.dZdb = dZdb
             self.dLdA = dLdA
+            
+            
 
         return dLdA
